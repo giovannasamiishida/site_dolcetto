@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dolcetto Atelier | Doces Finos</title>
+
+  <style>
+    /* FONTES */
+    @font-face {
+      font-family: 'LTS Raela Pro Light';
+      src: url('assets/fonts/LTSRaelaPro-Light.ttf') format('truetype');
+      font-weight: 300;
+    }
+
+    @font-face {
+      font-family: 'Nickles';
+      src: url('assets/fonts/Nickles.otf') format('opentype');
+    }
+
+    /* RESET (REMOVE QUALQUER ESPAÇO) */
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'LTS Raela Pro Light', sans-serif;
+      background-color: #fff;
+    }
+
+    /* HEADER */
+    header {
+      text-align: center;
+      padding: 20px 0 0;
+      background-color: #f5f5f5;
+    }
+
+    header img {
+      max-width: 220px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    nav {
+      position: relative;
+      border-top: 1px solid #1c1c1c;
+      border-bottom: 1px solid #1c1c1c;
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      padding: 12px 0;
+      margin: 0;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #1c1c1c;
+      font-size: 14px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .nav-casamentos-logo {
+      position: absolute;
+      right: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: inline-flex;
+      transition: opacity 0.3s;
+    }
+
+    .nav-casamentos-logo:hover {
+      opacity: 0.7;
+    }
+
+    .nav-casamentos-logo img {
+      height: 22px;
+      width: auto;
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .nav-casamentos-logo {
+        display: none;
+      }
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      background-color: #18223a;
+      background-image: url('assets/images/img8.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      width: 100%;
+      min-height: 90vh;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      overflow: hidden;
+    }
+
+    /* CONTEÚDO CENTRAL */
+    .hero-content {
+      position: relative;
+      z-index: 2;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero-logo {
+      max-width: 420px;
+      width: 80%;
+      margin-bottom: 30px;
+    }
+
+    .hero-button {
+      display: inline-block;
+      padding: 14px 40px;
+      border: 1px solid #ffffff;
+      border-radius: 30px;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: 0.3s;
+    }
+
+    .hero-button:hover {
+      background-color: #ffffff;
+      color: #18223a;
+    }
+
+    /* ATELIER */
+    .atelier {
+      display: flex;
+      background-color: #ededed;
+    }
+
+    .atelier-text {
+      flex: 1 1 0;
+      min-width: 320px;
+      padding: 100px 70px;
+    }
+
+    .atelier-label {
+      display: block;
+      color: #7a5841;
+      font-size: 14px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .atelier-heading {
+      font-family: 'Nickles', serif;
+      color: #18223a;
+      font-size: 38px;
+      line-height: 1.35;
+      font-weight: 400;
+      margin: 0 0 25px;
+    }
+
+    .atelier-heading .accent {
+      color: #7a5841;
+    }
+
+    .atelier-text p {
+      color: #3a4257;
+      font-size: 15px;
+      line-height: 1.8;
+      max-width: 480px;
+      margin: 0 0 20px;
+    }
+
+    .atelier-visual {
+      flex: 1 1 0;
+      min-width: 320px;
+      position: relative;
+      background-color: #7a5841;
+    }
+
+    .atelier-photo {
+      position: absolute;
+      top: 100px;
+      bottom: 100px;
+      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.18);
+    }
+
+    .atelier-photo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .atelier-photo-1 {
+      left: -9%;
+      width: 46%;
+    }
+
+    .atelier-photo-2 {
+      left: 43%;
+      width: 46%;
+    }
+
+    /* RESPONSIVO */
+    @media (max-width: 768px) {
+      nav ul {
+        gap: 25px;
+      }
+
+      .hero-logo {
+        max-width: 300px;
+      }
+
+      .atelier {
+        flex-direction: column;
+      }
+
+      .atelier-text,
+      .atelier-visual {
+        min-width: 0;
+      }
+
+      .atelier-text {
+        padding: 60px 30px;
+      }
+
+      .atelier-heading {
+        font-size: 28px;
+      }
+
+      .atelier-visual {
+        min-height: 420px;
+      }
+
+      .atelier-photo {
+        top: 60px;
+        bottom: 60px;
+      }
+    }
+
+    /* DOCES */
+    .doces {
+      background-color: #18223a;
+      width: 100%;
+      min-height: 50vh;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .doces-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .doces-flower {
+      width: 55px;
+      height: auto;
+      margin-bottom: 18px;
+    }
+
+    .doces-heading {
+      font-family: 'Nickles', serif;
+      color: #ffffff;
+      font-size: 41px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin: 0 0 30px;
+    }
+
+    @media (max-width: 768px) {
+      .doces-flower {
+        width: 39px;
+      }
+
+      .doces-heading {
+        font-size: 29px;
+      }
+    }
+
+    /* FOOTER */
+    .site-footer {
+      background-color: #ededed;
+      color: #18223a;
+      font-family: 'LTS Raela Pro Light', sans-serif;
+      padding: 60px 20px 30px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 70px;
+    }
+
+    .footer-column {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .footer-heading {
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+      margin: 0 0 6px;
+    }
+
+    .footer-contact {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: #18223a;
+    }
+
+    .footer-icon-link {
+      display: inline-flex;
+      transition: opacity 0.3s;
+    }
+
+    .footer-icon-link:hover {
+      opacity: 0.7;
+    }
+
+    .footer-icon,
+    .footer-social img {
+      height: 20px;
+      width: 20px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .footer-social {
+      display: inline-block;
+      transition: opacity 0.3s;
+    }
+
+    .footer-social:hover {
+      opacity: 0.7;
+    }
+
+    .footer-social-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .footer-casamentos-logo {
+      display: inline-flex;
+      transition: opacity 0.3s;
+    }
+
+    .footer-casamentos-logo:hover {
+      opacity: 0.7;
+    }
+
+    .footer-casamentos-logo img {
+      height: 20px;
+      width: auto;
+      display: block;
+    }
+
+    .footer-badge {
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .footer-badge #wp-rated,
+    .footer-badge #wp-rated a {
+      display: inline-flex;
+    }
+
+    .footer-badge #wp-rated img {
+      height: 100px;
+      width: auto;
+    }
+
+    .footer-divider {
+      width: 100%;
+      max-width: 1100px;
+      border: none;
+      border-top: 1px solid rgba(24, 34, 58, 0.2);
+      margin: 40px 0 20px;
+    }
+
+    .footer-bottom {
+      font-size: 12px;
+      color: #18223a;
+      opacity: 0.8;
+      text-align: center;
+      margin: 0;
+    }
+
+    @media (max-width: 600px) {
+      .footer-content {
+        flex-direction: column;
+        gap: 30px;
+      }
+    }
+
+    /* BOTÃO FLUTUANTE WHATSAPP */
+    .whatsapp-float {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      z-index: 999;
+
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: #294d69;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    }
+
+    .whatsapp-float img {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+    }
+
+    @media (max-width: 600px) {
+      .whatsapp-float {
+        width: 52px;
+        height: 52px;
+        right: 16px;
+        bottom: 16px;
+      }
+
+      .whatsapp-float img {
+        width: 26px;
+        height: 26px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <img src="assets/images/img0.png" alt="Dolcetto Atelier">
+
+    <nav>
+      <ul>
+        <li><a href="#atelier">Atelier</a></li>
+        <li><a href="#doces">Doces</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+
+      <a href="https://www.casamentos.com.br/doces-casamento/dolcetto-atelier--e466314" target="_blank" rel="noopener" class="nav-casamentos-logo">
+        <img src="assets/images/img11.png" alt="Casamentos.com.br">
+      </a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <img src="assets/images/img1.png" alt="Dolcetto Atelier" class="hero-logo">
+
+      <a href="https://wa.me/5512996777894" target="_blank" rel="noopener" class="hero-button">
+        SOLICITE SEU ORÇAMENTO
+      </a>
+    </div>
+  </section>
+
+  <!-- ATELIER -->
+  <section class="atelier" id="atelier">
+    <div class="atelier-text">
+      <span class="atelier-label">O Atelier</span>
+      <h2 class="atelier-heading">
+        Cada doce é pensado <span class="accent">especialmente</span> para o seu evento
+      </h2>
+      <p>
+        Somos um atelier de doces finos artesanais. Atendemos eventos de todos os tamanhos,
+        desde pequenas celebrações de aniversários e batizados até grandes eventos como
+        festas e casamentos.
+      </p>
+      <p>
+        Nossos doces são produzidos de forma individual e especialmente para o seu evento,
+        para que você tenha uma experiência única. A partir do entendimento da proposta do
+        seu evento, criamos a harmonia perfeita entre sabores e apresentação, tudo alinhado
+        com a decoração que você imaginou para o seu grande dia.
+      </p>
+    </div>
+
+    <div class="atelier-visual">
+      <div class="atelier-photo atelier-photo-1">
+        <img src="assets/images/img2.jpg" alt="Doces finos em taça de cristal">
+      </div>
+      <div class="atelier-photo atelier-photo-2">
+        <img src="assets/images/img3.jpg" alt="Doces decorados com flores">
+      </div>
+    </div>
+  </section>
+
+  <!-- DOCES -->
+  <section class="doces" id="doces">
+    <div class="doces-content">
+      <img src="assets/images/img4.png" alt="" class="doces-flower">
+      <h2 class="doces-heading">Conheça nossos doces</h2>
+      <a href="assets/docs/catalogo-2026.pdf" target="_blank" rel="noopener" class="hero-button">
+        CATÁLOGO
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" id="contato">
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3 class="footer-heading">Atendimento</h3>
+
+        <div class="footer-contact">
+          <a href="https://wa.me/5512996777894" target="_blank" rel="noopener" class="footer-icon-link">
+            <img src="assets/images/img7.png" alt="WhatsApp" class="footer-icon">
+          </a>
+          <span>Whatsapp: (12) 99677-7894</span>
+        </div>
+
+        <div class="footer-contact">
+          <img src="assets/images/img9.png" alt="E-mail" class="footer-icon">
+          <span>dolcettoatelier@gmail.com</span>
+        </div>
+      </div>
+
+      <div class="footer-column">
+        <h3 class="footer-heading">Redes Sociais</h3>
+
+        <div class="footer-social-row">
+          <a href="https://www.instagram.com/dolcettoatelier/" target="_blank" rel="noopener" class="footer-social">
+            <img src="assets/images/img10.png" alt="Instagram">
+          </a>
+
+          <a href="https://www.casamentos.com.br/doces-casamento/dolcetto-atelier--e466314" target="_blank" rel="noopener" class="footer-casamentos-logo">
+            <img src="assets/images/img11.png" alt="Casamentos.com.br">
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-column">
+        <div class="footer-badge">
+          <script src="https://cdn1.casamentos.com.br/_js/wp-rated.js?v=4"></script>
+          <div id="wp-rated">
+            <a target="_blank" rel="nofollow" href="https://www.casamentos.com.br/doces-casamento/dolcetto-atelier--e466314" title="Aconselhado em www.casamentos.com.br"><img alt="Recomendado em Casamentos.com.br" id="wp-rated-img" src="https://cdn1.casamentos.com.br/assets/img/badges/rated/badge-rated-5.png"/></a>
+          </div>
+          <script>wpShowRatedv2('466314');</script>
+        </div>
+      </div>
+    </div>
+
+    <hr class="footer-divider">
+
+    <p class="footer-bottom">
+      Dolcetto Atelier | CNPJ 63.814.873/0001-58 | São José dos Campos - Brasil
+    </p>
+  </footer>
+
+  <!-- BOTÃO FLUTUANTE WHATSAPP -->
+  <a href="https://wa.me/5512996777894" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Fale conosco pelo WhatsApp">
+    <img src="assets/images/img7.png" alt="WhatsApp">
+  </a>
+
+</body>
+</html>
