@@ -39,75 +39,107 @@
 
     /* HEADER */
     header {
-      position: sticky;
-      top: 0;
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 40px);
+      max-width: 560px;
       z-index: 1000;
-      text-align: center;
-      padding: 20px 0 0;
-      background-color: #f5f5f5;
-      transition: background-color 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+      border-radius: 60px;
+      background-color: rgba(250, 249, 246, 0.55);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease, top 0.3s ease;
     }
 
     header.scrolled {
-      background-color: rgba(245, 245, 245, 0.75);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+      background-color: rgba(250, 249, 246, 0.85);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
     }
 
-    header img {
-      max-width: 220px;
+    .header-inner {
+      padding: 6px 10px;
+
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-logo-link {
       display: block;
-      margin: 0 auto;
+      flex-shrink: 0;
+      justify-self: start;
     }
 
-    nav {
-      position: relative;
-      border-top: 1px solid #18223a;
-      border-bottom: 1px solid #18223a;
-      width: 100%;
-      margin-top: 15px;
-    }
-
-    nav ul {
-      list-style: none;
-      display: flex;
-      justify-content: center;
-      gap: 60px;
-      padding: 12px 0;
-      margin: 0;
-    }
-
-    nav ul li a {
-      text-decoration: none;
-      color: #1c1c1c;
-      font-size: 14px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    .nav-casamentos-logo {
-      position: absolute;
-      right: 30px;
-      top: 50%;
-      transform: translateY(-50%);
-      display: inline-flex;
-      transition: opacity 0.3s;
-    }
-
-    .nav-casamentos-logo:hover {
-      opacity: 0.7;
-    }
-
-    .nav-casamentos-logo img {
+    .header-logo {
       height: 22px;
       width: auto;
       display: block;
     }
 
+    nav ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 0;
+      margin: 0;
+    }
+
+    nav ul li a {
+      display: block;
+      line-height: 1;
+      text-decoration: none;
+      color: #1c1c1c;
+      font-size: 11px;
+      letter-spacing: 0.3px;
+    }
+
+    .header-cta {
+      flex-shrink: 0;
+      justify-self: end;
+      display: inline-block;
+      padding: 6px 13px;
+      border-radius: 30px;
+      background-color: #18223a;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      transition: opacity 0.3s ease;
+    }
+
+    .header-cta:hover {
+      opacity: 0.8;
+    }
+
     @media (max-width: 768px) {
-      .nav-casamentos-logo {
-        display: none;
+      header {
+        top: 14px;
+        width: calc(100% - 24px);
+        border-radius: 26px;
+      }
+
+      .header-inner {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 16px 24px;
+      }
+
+      nav {
+        order: 3;
+        width: 100%;
+      }
+
+      nav ul {
+        gap: 22px;
+        justify-content: center;
       }
     }
 
@@ -120,11 +152,12 @@
       background-position: center;
       background-size: cover;
       width: 100%;
-      min-height: 90vh;
+      min-height: 100vh;
 
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 130px 20px 60px;
 
       overflow: hidden;
     }
@@ -138,6 +171,60 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
+    }
+
+    .hero-tagline-wrap {
+      position: absolute;
+      top: 96px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-tagline {
+      display: flex;
+      align-items: baseline;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 9px;
+      letter-spacing: 0.8px;
+      margin: 0;
+    }
+
+    .hero-tagline-sub {
+      color: rgba(255, 255, 255, 0.35);
+      font-size: 7px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .hero-tagline-label {
+      margin-right: 5px;
+    }
+
+    .hero-tagline-word {
+      font-style: italic;
+      letter-spacing: 0;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .hero-tagline-cursor {
+      display: inline-block;
+      width: 1px;
+      margin-left: 0;
+      color: rgba(255, 255, 255, 0.9);
+      animation: hero-cursor-blink 0.9s step-end infinite;
+    }
+
+    @keyframes hero-cursor-blink {
+      0%, 50% { opacity: 1; }
+      50.01%, 100% { opacity: 0; }
     }
 
     .hero-logo {
@@ -498,23 +585,34 @@
 
   <!-- HEADER -->
   <header>
-    <img src="assets/images/img0.png" alt="Dolcetto Atelier">
-
-    <nav>
-      <ul>
-        <li><a href="#atelier">Atelier</a></li>
-        <li><a href="#doces">Doces</a></li>
-        <li><a href="#contato">Contato</a></li>
-      </ul>
-
-      <a href="https://www.casamentos.com.br/doces-casamento/dolcetto-atelier--e466314" target="_blank" rel="noopener" class="nav-casamentos-logo">
-        <img src="assets/images/img11.png" alt="Casamentos.com.br">
+    <div class="header-inner">
+      <a href="#" class="header-logo-link">
+        <img src="assets/images/img0.png" alt="Dolcetto Atelier" class="header-logo">
       </a>
-    </nav>
+
+      <nav>
+        <ul>
+          <li><a href="#atelier">Atelier</a></li>
+          <li><a href="#doces">Doces</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </nav>
+
+      <a href="https://wa.me/5512996777894" target="_blank" rel="noopener" class="header-cta">
+        Fale conosco
+      </a>
+    </div>
   </header>
 
   <!-- HERO -->
   <section class="hero">
+    <div class="hero-tagline-wrap">
+      <p class="hero-tagline">
+        <span class="hero-tagline-label">Criado com</span><span class="hero-tagline-word" id="heroTaglineWord"></span><span class="hero-tagline-cursor">|</span>
+      </p>
+      <p class="hero-tagline-sub">Por Giovanna Ishida</p>
+    </div>
+
     <div class="hero-content">
       <img src="assets/images/img1.png" alt="Dolcetto Atelier" class="hero-logo">
 
@@ -626,6 +724,46 @@
     window.addEventListener('scroll', () => {
       header.classList.toggle('scrolled', window.scrollY > 10);
     });
+  </script>
+
+  <script>
+    const heroTaglineWords = ['amor', 'carinho', 'cuidado'];
+    const heroTaglineEl = document.getElementById('heroTaglineWord');
+
+    let heroWordIndex = 0;
+    let heroCharIndex = 0;
+    let heroDeleting = false;
+
+    function typeHeroTagline() {
+      const currentWord = heroTaglineWords[heroWordIndex];
+
+      if (heroDeleting) {
+        heroCharIndex--;
+        heroTaglineEl.textContent = currentWord.slice(0, heroCharIndex);
+
+        if (heroCharIndex === 0) {
+          heroDeleting = false;
+          heroWordIndex = (heroWordIndex + 1) % heroTaglineWords.length;
+          setTimeout(typeHeroTagline, 300);
+          return;
+        }
+
+        setTimeout(typeHeroTagline, 50);
+      } else {
+        heroCharIndex++;
+        heroTaglineEl.textContent = currentWord.slice(0, heroCharIndex);
+
+        if (heroCharIndex === currentWord.length) {
+          heroDeleting = true;
+          setTimeout(typeHeroTagline, 1500);
+          return;
+        }
+
+        setTimeout(typeHeroTagline, 110);
+      }
+    }
+
+    typeHeroTagline();
   </script>
 
 </body>
