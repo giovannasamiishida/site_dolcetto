@@ -193,16 +193,14 @@
     }
 
     .hero-tagline-wrap {
-      position: absolute;
-      top: 140px;
-      left: 50%;
-      transform: translateX(-50%);
+      position: relative;
       z-index: 2;
 
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 6px;
+      margin-bottom: 34px;
     }
 
     .hero-tagline {
@@ -716,14 +714,14 @@
   <section class="hero">
     <span class="hero-watermark" aria-hidden="true">DOLCETTO</span>
 
-    <div class="hero-tagline-wrap">
-      <p class="hero-tagline">
-        <span class="hero-tagline-label">Criado com</span><span class="hero-tagline-word" id="heroTaglineWord"></span><span class="hero-tagline-cursor">|</span>
-      </p>
-      <p class="hero-tagline-sub">Por Giovanna Ishida</p>
-    </div>
-
     <div class="hero-content">
+      <div class="hero-tagline-wrap">
+        <p class="hero-tagline">
+          <span class="hero-tagline-label">Criado com</span><span class="hero-tagline-word" id="heroTaglineWord"></span><span class="hero-tagline-cursor">|</span>
+        </p>
+        <p class="hero-tagline-sub">Por Giovanna Ishida</p>
+      </div>
+
       <div class="hero-headline">
         <h1 class="hero-title">Doces finos feitos<br><span class="hero-title-underline">de forma artesanal</span> <em>para<br>celebrar o que realmente<br>importa.</em></h1>
         <p class="hero-subtitle">Cada doce aqui na Dolcetto Atelier<br>é criado sob medida para valorizar ainda mais o seu evento,<br>unindo técnica e sabor que transformam sua celebração em<br>uma experiência memorável.</p>
