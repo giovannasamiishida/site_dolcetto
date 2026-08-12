@@ -115,8 +115,10 @@
       transition: opacity 0.3s ease;
     }
 
-    .header-cta:hover {
-      opacity: 0.8;
+    @media (hover: hover) {
+      .header-cta:hover {
+        opacity: 0.8;
+      }
     }
 
     @media (max-width: 768px) {
@@ -294,9 +296,11 @@
       transition: 0.3s;
     }
 
-    .hero-button:hover {
-      background-color: #ffffff;
-      color: #18223a;
+    @media (hover: hover) {
+      .hero-button:hover {
+        background-color: #ffffff;
+        color: #18223a;
+      }
     }
 
     .hero-content .hero-button {
@@ -314,17 +318,19 @@
       transition: opacity 0.3s ease;
     }
 
-    .hero-content .hero-button:hover {
-      opacity: 0.8;
-    }
-
     .hero-button-arrow {
       display: inline-block;
       transition: transform 0.3s ease;
     }
 
-    .hero-content .hero-button:hover .hero-button-arrow {
-      transform: translateX(4px);
+    @media (hover: hover) {
+      .hero-content .hero-button:hover {
+        opacity: 0.8;
+      }
+
+      .hero-content .hero-button:hover .hero-button-arrow {
+        transform: translateX(4px);
+      }
     }
 
     /* ATELIER */
