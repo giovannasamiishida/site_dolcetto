@@ -407,29 +407,6 @@
       position: relative;
     }
 
-    .atelier-photo-shadow {
-      position: absolute;
-      top: 40px;
-      bottom: 40px;
-      width: 46%;
-      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.18);
-      pointer-events: none;
-      opacity: 1;
-      transition: opacity 0.3s ease;
-    }
-
-    .atelier-photo-shadow.is-hidden {
-      opacity: 0;
-    }
-
-    .atelier-photo-shadow-1 {
-      left: -9%;
-    }
-
-    .atelier-photo-shadow-2 {
-      left: 43%;
-    }
-
     .atelier-carousel {
       position: absolute;
       top: 40px;
@@ -443,14 +420,12 @@
       position: relative;
       width: 100%;
       height: 100%;
-      transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
     }
 
     .atelier-slide {
       position: absolute;
       top: 0;
       bottom: 0;
-      width: 46.94%;
     }
 
     .atelier-slide img {
@@ -458,22 +433,6 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-    }
-
-    .atelier-slide-prev {
-      left: -53.06%;
-    }
-
-    .atelier-slide-a {
-      left: 0%;
-    }
-
-    .atelier-slide-b {
-      left: 53.06%;
-    }
-
-    .atelier-slide-next {
-      left: 106.12%;
     }
 
     .atelier-carousel-arrow {
@@ -545,11 +504,6 @@
 
       .atelier-visual {
         min-height: 420px;
-      }
-
-      .atelier-photo-shadow {
-        top: 60px;
-        bottom: 60px;
       }
 
       .atelier-carousel {
@@ -871,24 +825,8 @@
     </div>
 
     <div class="atelier-visual">
-      <div class="atelier-photo-shadow atelier-photo-shadow-1"></div>
-      <div class="atelier-photo-shadow atelier-photo-shadow-2"></div>
-
       <div class="atelier-carousel">
-        <div class="atelier-track" id="atelier-track">
-          <div class="atelier-slide atelier-slide-prev">
-            <img src="assets/images/img12.jpg" alt="Doces artesanais Dolcetto Atelier" id="atelier-slide-prev-img">
-          </div>
-          <div class="atelier-slide atelier-slide-a">
-            <img src="assets/images/img2.jpg" alt="Doces finos em taça de cristal" id="atelier-slide-a-img">
-          </div>
-          <div class="atelier-slide atelier-slide-b">
-            <img src="assets/images/img3.jpg" alt="Doces decorados com flores" id="atelier-slide-b-img">
-          </div>
-          <div class="atelier-slide atelier-slide-next">
-            <img src="assets/images/img12.jpg" alt="Doces artesanais Dolcetto Atelier" id="atelier-slide-next-img">
-          </div>
-        </div>
+        <div class="atelier-track" id="atelier-track"></div>
       </div>
 
       <button type="button" class="atelier-carousel-arrow atelier-carousel-arrow--prev" id="atelier-carousel-prev" aria-label="Ver imagem anterior">
@@ -1029,89 +967,99 @@
       { src: 'assets/images/img16.jpg', alt: 'Doces artesanais Dolcetto Atelier' }
     ];
 
-    let atelierIndex = 0;
-    let atelierAnimating = false;
-
+    const atelierCarousel = document.querySelector('.atelier-carousel');
     const atelierTrack = document.getElementById('atelier-track');
     const atelierPrev = document.getElementById('atelier-carousel-prev');
     const atelierNext = document.getElementById('atelier-carousel-next');
-    const atelierShadows = document.querySelectorAll('.atelier-photo-shadow');
-
-    const atelierSlideImgs = {
-      prev: document.getElementById('atelier-slide-prev-img'),
-      a: document.getElementById('atelier-slide-a-img'),
-      b: document.getElementById('atelier-slide-b-img'),
-      next: document.getElementById('atelier-slide-next-img')
-    };
-
-    function setAtelierSlideImage(imgEl, image) {
-      imgEl.src = image.src;
-      imgEl.alt = image.alt;
-    }
-
-    function renderAtelierSlides() {
-      const total = atelierImages.length;
-      setAtelierSlideImage(atelierSlideImgs.prev, atelierImages[(atelierIndex - 1 + total) % total]);
-      setAtelierSlideImage(atelierSlideImgs.a, atelierImages[atelierIndex]);
-      setAtelierSlideImage(atelierSlideImgs.b, atelierImages[(atelierIndex + 1) % total]);
-      setAtelierSlideImage(atelierSlideImgs.next, atelierImages[(atelierIndex + 2) % total]);
-    }
-
-    function goAtelierSlide(direction) {
-      if (atelierAnimating) return;
-      atelierAnimating = true;
-
-      const total = atelierImages.length;
-      atelierShadows.forEach((el) => el.classList.add('is-hidden'));
-      atelierTrack.style.transition = 'transform 0.6s cubic-bezier(0.65, 0, 0.35, 1)';
-      atelierTrack.style.transform = direction === 'next' ? 'translateX(-53.06%)' : 'translateX(53.06%)';
-
-      atelierTrack.addEventListener('transitionend', function onEnd(e) {
-        if (e.propertyName !== 'transform') return;
-        atelierTrack.removeEventListener('transitionend', onEnd);
-
-        atelierIndex = direction === 'next'
-          ? (atelierIndex + 1) % total
-          : (atelierIndex - 1 + total) % total;
-
-        atelierTrack.style.transition = 'none';
-        atelierTrack.style.transform = 'translateX(0)';
-        renderAtelierSlides();
-
-        atelierTrack.offsetHeight;
-        atelierShadows.forEach((el) => el.classList.remove('is-hidden'));
-        atelierAnimating = false;
-      });
-    }
-
-    const ATELIER_AUTOPLAY_DELAY = 5000;
-    let atelierAutoplayTimer = null;
     const atelierVisual = document.querySelector('.atelier-visual');
 
-    function startAtelierAutoplay() {
-      atelierAutoplayTimer = setInterval(() => goAtelierSlide('next'), ATELIER_AUTOPLAY_DELAY);
+    const ATELIER_MS_PER_STEP = 16000; // tempo (ms) para a esteira andar a largura de uma foto
+    const total = atelierImages.length;
+
+    let stepPx = 0;
+    let cycleWidth = 0;
+    let baseSpeed = 0; // px por ms
+    let offset = 0;
+    let boost = 0; // impulso extra (px) aplicado pelas setas, decai a cada frame
+    let isPaused = false;
+    let lastFrameTime = null;
+
+    function buildAtelierSlides() {
+      atelierTrack.innerHTML = '';
+      for (let i = 0; i < total * 2; i++) {
+        const image = atelierImages[i % total];
+        const slide = document.createElement('div');
+        slide.className = 'atelier-slide';
+
+        const img = document.createElement('img');
+        img.src = image.src;
+        img.alt = image.alt;
+        slide.appendChild(img);
+
+        atelierTrack.appendChild(slide);
+      }
     }
 
-    function resetAtelierAutoplay() {
-      clearInterval(atelierAutoplayTimer);
-      startAtelierAutoplay();
+    function layoutAtelierSlides() {
+      const clipperWidth = atelierCarousel.getBoundingClientRect().width;
+      stepPx = clipperWidth * (52 / 98);
+      cycleWidth = stepPx * total;
+      const slideWidth = stepPx * (46 / 52); // espaço entre as fotos
+
+      const slides = atelierTrack.children;
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].style.width = slideWidth + 'px';
+        slides[i].style.left = (i * stepPx) + 'px';
+      }
+
+      baseSpeed = stepPx / ATELIER_MS_PER_STEP;
+      offset = offset % cycleWidth;
+    }
+
+    function tickAtelierCarousel(time) {
+      if (lastFrameTime === null) lastFrameTime = time;
+      const dt = time - lastFrameTime;
+      lastFrameTime = time;
+
+      if (!isPaused) {
+        offset += baseSpeed * dt;
+      }
+
+      if (boost !== 0) {
+        const applied = boost * 0.12;
+        offset += applied;
+        boost -= applied;
+        if (Math.abs(boost) < 0.5) boost = 0;
+      }
+
+      if (cycleWidth > 0) {
+        offset = ((offset % cycleWidth) + cycleWidth) % cycleWidth;
+      }
+
+      atelierTrack.style.transform = 'translateX(' + (-offset) + 'px)';
+      requestAnimationFrame(tickAtelierCarousel);
     }
 
     atelierNext.addEventListener('click', () => {
-      goAtelierSlide('next');
-      resetAtelierAutoplay();
+      boost += stepPx;
     });
 
     atelierPrev.addEventListener('click', () => {
-      goAtelierSlide('prev');
-      resetAtelierAutoplay();
+      boost -= stepPx;
     });
 
-    atelierVisual.addEventListener('mouseenter', () => clearInterval(atelierAutoplayTimer));
-    atelierVisual.addEventListener('mouseleave', startAtelierAutoplay);
+    atelierVisual.addEventListener('mouseenter', () => { isPaused = true; });
+    atelierVisual.addEventListener('mouseleave', () => { isPaused = false; });
 
-    renderAtelierSlides();
-    startAtelierAutoplay();
+    let atelierResizeTimer = null;
+    window.addEventListener('resize', () => {
+      clearTimeout(atelierResizeTimer);
+      atelierResizeTimer = setTimeout(layoutAtelierSlides, 150);
+    });
+
+    buildAtelierSlides();
+    layoutAtelierSlides();
+    requestAnimationFrame(tickAtelierCarousel);
   </script>
 
 </body>
