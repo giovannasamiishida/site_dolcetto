@@ -333,6 +333,27 @@
       }
     }
 
+    .doces-content .hero-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 40px;
+      border: none;
+      background-color: #ffffff;
+      color: #18223a;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      text-transform: none;
+      transition: opacity 0.3s ease;
+    }
+
+    @media (hover: hover) {
+      .doces-content .hero-button:hover {
+        opacity: 0.8;
+      }
+    }
+
     /* ATELIER */
     .atelier {
       display: flex;
@@ -342,13 +363,14 @@
     .atelier-text {
       flex: 1 1 0;
       min-width: 320px;
-      padding: 100px 70px;
+      padding: 100px 0px 100px 120px;
     }
 
     .atelier-label {
       display: block;
-      color: #7a5841;
+      color: #18223a;
       font-size: 14px;
+      font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
       margin-bottom: 20px;
@@ -364,11 +386,15 @@
     }
 
     .atelier-heading .accent {
-      color: #7a5841;
+      color: #18223a;
+    }
+
+    .atelier-heading .nowrap {
+      white-space: nowrap;
     }
 
     .atelier-text p {
-      color: #3a4257;
+      color: #6b6b6b;
       font-size: 15px;
       line-height: 1.8;
       max-width: 480px;
@@ -379,13 +405,12 @@
       flex: 1 1 0;
       min-width: 320px;
       position: relative;
-      background-color: #7a5841;
     }
 
     .atelier-photo {
       position: absolute;
-      top: 100px;
-      bottom: 100px;
+      top: 40px;
+      bottom: 40px;
       box-shadow: 0 25px 45px rgba(0, 0, 0, 0.18);
     }
 
@@ -624,7 +649,7 @@
       width: 60px;
       height: 60px;
       border-radius: 50%;
-      background-color: #294d69;
+      background-color: #25d366;
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
 
       display: flex;
@@ -632,11 +657,24 @@
       justify-content: center;
 
       transition: transform 0.3s, box-shadow 0.3s;
+      animation: whatsapp-pulse 2s infinite;
     }
 
     .whatsapp-float:hover {
       transform: scale(1.08);
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    }
+
+    @keyframes whatsapp-pulse {
+      0% {
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3), 0 0 0 0 rgba(37, 211, 102, 0.55);
+      }
+      70% {
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3), 0 0 0 16px rgba(37, 211, 102, 0);
+      }
+      100% {
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3), 0 0 0 0 rgba(37, 211, 102, 0);
+      }
     }
 
     .whatsapp-float img {
@@ -714,7 +752,7 @@
     <div class="atelier-text">
       <span class="atelier-label">O Atelier</span>
       <h2 class="atelier-heading">
-        Cada doce é pensado <span class="accent">especialmente</span> para o seu evento
+        <span class="nowrap">Cada doce é pensado <span class="accent">especialmente</span></span><br>para o seu evento
       </h2>
       <p>
         Somos um atelier de doces finos artesanais. Atendemos eventos de todos os tamanhos,
