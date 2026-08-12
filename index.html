@@ -422,6 +422,7 @@
       left: -9%;
       right: 11%;
       overflow: hidden;
+      touch-action: pan-y;
     }
 
     .atelier-track {
@@ -554,17 +555,8 @@
         width: 100%;
       }
 
-      .atelier-carousel-arrow svg {
-        width: 22px;
-        height: 22px;
-      }
-
-      .atelier-carousel-arrow--prev {
-        left: 8px;
-      }
-
-      .atelier-carousel-arrow--next {
-        right: 8px;
+      .atelier-carousel-arrow {
+        display: none;
       }
     }
 
@@ -1033,6 +1025,7 @@
     let lastFrameTime = null;
     let activeDotIndex = -1;
     let dotEls = [];
+    const atelierDrag = { active: false, locked: false, startX: 0, startY: 0, startOffset: 0 };
 
     function buildAtelierDots() {
       atelierDots.innerHTML = '';
@@ -1100,7 +1093,7 @@
       const dt = time - lastFrameTime;
       lastFrameTime = time;
 
-      if (!isPaused) {
+      if (!isPaused && !atelierDrag.active) {
         offset += baseSpeed * dt;
       }
 
@@ -1130,6 +1123,50 @@
 
     atelierVisual.addEventListener('mouseenter', () => { isPaused = true; });
     atelierVisual.addEventListener('mouseleave', () => { isPaused = false; });
+
+    atelierCarousel.addEventListener('touchstart', (e) => {
+      const t = e.touches[0];
+      atelierDrag.active = true;
+      atelierDrag.locked = false;
+      atelierDrag.startX = t.clientX;
+      atelierDrag.startY = t.clientY;
+      atelierDrag.startOffset = offset;
+    }, { passive: true });
+
+    atelierCarousel.addEventListener('touchmove', (e) => {
+      if (!atelierDrag.active) return;
+      const t = e.touches[0];
+      const dx = t.clientX - atelierDrag.startX;
+      const dy = t.clientY - atelierDrag.startY;
+
+      if (!atelierDrag.locked) {
+        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 6) {
+          atelierDrag.locked = true;
+        } else if (Math.abs(dy) > 6) {
+          atelierDrag.active = false;
+          return;
+        } else {
+          return;
+        }
+      }
+
+      e.preventDefault();
+      offset = atelierDrag.startOffset - dx;
+    }, { passive: false });
+
+    function endAtelierDrag() {
+      if (!atelierDrag.active) return;
+      const wasLocked = atelierDrag.locked;
+      atelierDrag.active = false;
+
+      if (wasLocked && stepPx > 0) {
+        const nearest = Math.round(offset / stepPx);
+        boost += (nearest * stepPx) - offset;
+      }
+    }
+
+    atelierCarousel.addEventListener('touchend', endAtelierDrag);
+    atelierCarousel.addEventListener('touchcancel', endAtelierDrag);
 
     let atelierResizeTimer = null;
     window.addEventListener('resize', () => {
