@@ -407,28 +407,108 @@
       position: relative;
     }
 
-    .atelier-photo {
+    .atelier-photo-shadow {
       position: absolute;
       top: 40px;
       bottom: 40px;
+      width: 46%;
       box-shadow: 0 25px 45px rgba(0, 0, 0, 0.18);
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity 0.3s ease;
     }
 
-    .atelier-photo img {
+    .atelier-photo-shadow.is-hidden {
+      opacity: 0;
+    }
+
+    .atelier-photo-shadow-1 {
+      left: -9%;
+    }
+
+    .atelier-photo-shadow-2 {
+      left: 43%;
+    }
+
+    .atelier-carousel {
+      position: absolute;
+      top: 40px;
+      bottom: 40px;
+      left: -9%;
+      right: 11%;
+      overflow: hidden;
+    }
+
+    .atelier-track {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+
+    .atelier-slide {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 46.94%;
+    }
+
+    .atelier-slide img {
       display: block;
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
 
-    .atelier-photo-1 {
-      left: -9%;
-      width: 46%;
+    .atelier-slide-prev {
+      left: -53.06%;
     }
 
-    .atelier-photo-2 {
-      left: 43%;
-      width: 46%;
+    .atelier-slide-a {
+      left: 0%;
+    }
+
+    .atelier-slide-b {
+      left: 53.06%;
+    }
+
+    .atelier-slide-next {
+      left: 106.12%;
+    }
+
+    .atelier-carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 5;
+      transition: opacity 0.3s ease;
+    }
+
+    .atelier-carousel-arrow svg {
+      width: 28px;
+      height: 28px;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+    }
+
+    .atelier-carousel-arrow--prev {
+      left: calc(-9% - 56px);
+    }
+
+    .atelier-carousel-arrow--next {
+      right: calc(11% - 56px);
+    }
+
+    @media (hover: hover) {
+      .atelier-carousel-arrow:hover {
+        opacity: 0.6;
+      }
     }
 
     /* RESPONSIVO */
@@ -463,9 +543,27 @@
         min-height: 420px;
       }
 
-      .atelier-photo {
+      .atelier-photo-shadow {
         top: 60px;
         bottom: 60px;
+      }
+
+      .atelier-carousel {
+        top: 60px;
+        bottom: 60px;
+      }
+
+      .atelier-carousel-arrow svg {
+        width: 22px;
+        height: 22px;
+      }
+
+      .atelier-carousel-arrow--prev {
+        left: calc(-9% - 28px);
+      }
+
+      .atelier-carousel-arrow--next {
+        right: calc(11% - 28px);
       }
     }
 
@@ -769,12 +867,36 @@
     </div>
 
     <div class="atelier-visual">
-      <div class="atelier-photo atelier-photo-1">
-        <img src="assets/images/img2.jpg" alt="Doces finos em taça de cristal">
+      <div class="atelier-photo-shadow atelier-photo-shadow-1"></div>
+      <div class="atelier-photo-shadow atelier-photo-shadow-2"></div>
+
+      <div class="atelier-carousel">
+        <div class="atelier-track" id="atelier-track">
+          <div class="atelier-slide atelier-slide-prev">
+            <img src="assets/images/img12.jpg" alt="Doces artesanais Dolcetto Atelier" id="atelier-slide-prev-img">
+          </div>
+          <div class="atelier-slide atelier-slide-a">
+            <img src="assets/images/img2.jpg" alt="Doces finos em taça de cristal" id="atelier-slide-a-img">
+          </div>
+          <div class="atelier-slide atelier-slide-b">
+            <img src="assets/images/img3.jpg" alt="Doces decorados com flores" id="atelier-slide-b-img">
+          </div>
+          <div class="atelier-slide atelier-slide-next">
+            <img src="assets/images/img12.jpg" alt="Doces artesanais Dolcetto Atelier" id="atelier-slide-next-img">
+          </div>
+        </div>
       </div>
-      <div class="atelier-photo atelier-photo-2">
-        <img src="assets/images/img3.jpg" alt="Doces decorados com flores">
-      </div>
+
+      <button type="button" class="atelier-carousel-arrow atelier-carousel-arrow--prev" id="atelier-carousel-prev" aria-label="Ver imagem anterior">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 6l-6 6 6 6" stroke="#18223a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button type="button" class="atelier-carousel-arrow atelier-carousel-arrow--next" id="atelier-carousel-next" aria-label="Ver próxima imagem">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 6l6 6-6 6" stroke="#18223a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </div>
   </section>
 
@@ -890,6 +1012,78 @@
     }
 
     typeHeroTagline();
+  </script>
+
+  <script>
+    const atelierImages = [
+      { src: 'assets/images/img2.jpg', alt: 'Doces finos em taça de cristal' },
+      { src: 'assets/images/img3.jpg', alt: 'Doces decorados com flores' },
+      { src: 'assets/images/img12.jpg', alt: 'Doces artesanais Dolcetto Atelier' },
+      { src: 'assets/images/img13.jpg', alt: 'Doces artesanais Dolcetto Atelier' },
+      { src: 'assets/images/img14.jpg', alt: 'Doces artesanais Dolcetto Atelier' },
+      { src: 'assets/images/img15.jpg', alt: 'Doces artesanais Dolcetto Atelier' },
+      { src: 'assets/images/img16.jpg', alt: 'Doces artesanais Dolcetto Atelier' }
+    ];
+
+    let atelierIndex = 0;
+    let atelierAnimating = false;
+
+    const atelierTrack = document.getElementById('atelier-track');
+    const atelierPrev = document.getElementById('atelier-carousel-prev');
+    const atelierNext = document.getElementById('atelier-carousel-next');
+    const atelierShadows = document.querySelectorAll('.atelier-photo-shadow');
+
+    const atelierSlideImgs = {
+      prev: document.getElementById('atelier-slide-prev-img'),
+      a: document.getElementById('atelier-slide-a-img'),
+      b: document.getElementById('atelier-slide-b-img'),
+      next: document.getElementById('atelier-slide-next-img')
+    };
+
+    function setAtelierSlideImage(imgEl, image) {
+      imgEl.src = image.src;
+      imgEl.alt = image.alt;
+    }
+
+    function renderAtelierSlides() {
+      const total = atelierImages.length;
+      setAtelierSlideImage(atelierSlideImgs.prev, atelierImages[(atelierIndex - 1 + total) % total]);
+      setAtelierSlideImage(atelierSlideImgs.a, atelierImages[atelierIndex]);
+      setAtelierSlideImage(atelierSlideImgs.b, atelierImages[(atelierIndex + 1) % total]);
+      setAtelierSlideImage(atelierSlideImgs.next, atelierImages[(atelierIndex + 2) % total]);
+    }
+
+    function goAtelierSlide(direction) {
+      if (atelierAnimating) return;
+      atelierAnimating = true;
+
+      const total = atelierImages.length;
+      atelierShadows.forEach((el) => el.classList.add('is-hidden'));
+      atelierTrack.style.transition = 'transform 0.6s cubic-bezier(0.65, 0, 0.35, 1)';
+      atelierTrack.style.transform = direction === 'next' ? 'translateX(-53.06%)' : 'translateX(53.06%)';
+
+      atelierTrack.addEventListener('transitionend', function onEnd(e) {
+        if (e.propertyName !== 'transform') return;
+        atelierTrack.removeEventListener('transitionend', onEnd);
+
+        atelierIndex = direction === 'next'
+          ? (atelierIndex + 1) % total
+          : (atelierIndex - 1 + total) % total;
+
+        atelierTrack.style.transition = 'none';
+        atelierTrack.style.transform = 'translateX(0)';
+        renderAtelierSlides();
+
+        atelierTrack.offsetHeight;
+        atelierShadows.forEach((el) => el.classList.remove('is-hidden'));
+        atelierAnimating = false;
+      });
+    }
+
+    atelierNext.addEventListener('click', () => goAtelierSlide('next'));
+    atelierPrev.addEventListener('click', () => goAtelierSlide('prev'));
+
+    renderAtelierSlides();
   </script>
 
 </body>
