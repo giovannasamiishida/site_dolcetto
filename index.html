@@ -405,7 +405,14 @@
     .atelier-visual {
       flex: 1 1 0;
       min-width: 320px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .atelier-carousel-wrap {
       position: relative;
+      flex: 1 1 auto;
+      min-height: 0;
     }
 
     .atelier-carousel {
@@ -471,6 +478,34 @@
       }
     }
 
+    .atelier-dots {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-left: -9%;
+      width: 98%;
+      padding-top: 2px;
+      padding-bottom: 48px;
+    }
+
+    .atelier-dot {
+      width: 22px;
+      height: 3px;
+      border-radius: 2px;
+      background-color: rgba(24, 34, 58, 0.18);
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: background-color 0.3s ease, width 0.3s ease;
+    }
+
+    .atelier-dot.is-active {
+      width: 32px;
+      background-color: #18223a;
+    }
+
     /* RESPONSIVO */
     @media (max-width: 768px) {
       nav ul {
@@ -512,6 +547,11 @@
         bottom: 60px;
         left: 0;
         right: 0;
+      }
+
+      .atelier-dots {
+        margin-left: 0;
+        width: 100%;
       }
 
       .atelier-carousel-arrow svg {
@@ -828,20 +868,24 @@
     </div>
 
     <div class="atelier-visual">
-      <div class="atelier-carousel">
-        <div class="atelier-track" id="atelier-track"></div>
+      <div class="atelier-carousel-wrap">
+        <div class="atelier-carousel">
+          <div class="atelier-track" id="atelier-track"></div>
+        </div>
+
+        <button type="button" class="atelier-carousel-arrow atelier-carousel-arrow--prev" id="atelier-carousel-prev" aria-label="Ver imagem anterior">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 6l-6 6 6 6" stroke="#18223a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button type="button" class="atelier-carousel-arrow atelier-carousel-arrow--next" id="atelier-carousel-next" aria-label="Ver próxima imagem">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 6l6 6-6 6" stroke="#18223a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
       </div>
 
-      <button type="button" class="atelier-carousel-arrow atelier-carousel-arrow--prev" id="atelier-carousel-prev" aria-label="Ver imagem anterior">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M15 6l-6 6 6 6" stroke="#18223a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <button type="button" class="atelier-carousel-arrow atelier-carousel-arrow--next" id="atelier-carousel-next" aria-label="Ver próxima imagem">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M9 6l6 6-6 6" stroke="#18223a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
+      <div class="atelier-dots" id="atelier-dots"></div>
     </div>
   </section>
 
@@ -975,6 +1019,7 @@
     const atelierPrev = document.getElementById('atelier-carousel-prev');
     const atelierNext = document.getElementById('atelier-carousel-next');
     const atelierVisual = document.querySelector('.atelier-visual');
+    const atelierDots = document.getElementById('atelier-dots');
 
     const ATELIER_MS_PER_STEP = 16000; // tempo (ms) para a esteira andar a largura de uma foto
     const total = atelierImages.length;
@@ -986,6 +1031,37 @@
     let boost = 0; // impulso extra (px) aplicado pelas setas, decai a cada frame
     let isPaused = false;
     let lastFrameTime = null;
+    let activeDotIndex = -1;
+    let dotEls = [];
+
+    function buildAtelierDots() {
+      atelierDots.innerHTML = '';
+      dotEls = atelierImages.map((image, i) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'atelier-dot';
+        dot.setAttribute('aria-label', 'Ir para foto ' + (i + 1));
+        dot.addEventListener('click', () => goToAtelierIndex(i));
+        atelierDots.appendChild(dot);
+        return dot;
+      });
+    }
+
+    function goToAtelierIndex(targetIndex) {
+      const currentIndex = Math.round(offset / stepPx) % total;
+      let diff = (targetIndex - currentIndex) % total;
+      if (diff > total / 2) diff -= total;
+      if (diff < -total / 2) diff += total;
+      boost += diff * stepPx;
+    }
+
+    function updateAtelierDots() {
+      if (!stepPx) return;
+      const index = Math.round(offset / stepPx) % total;
+      if (index === activeDotIndex) return;
+      activeDotIndex = index;
+      dotEls.forEach((dot, i) => dot.classList.toggle('is-active', i === index));
+    }
 
     function buildAtelierSlides() {
       atelierTrack.innerHTML = '';
@@ -1040,6 +1116,7 @@
       }
 
       atelierTrack.style.transform = 'translateX(' + (-offset) + 'px)';
+      updateAtelierDots();
       requestAnimationFrame(tickAtelierCarousel);
     }
 
@@ -1061,6 +1138,7 @@
     });
 
     buildAtelierSlides();
+    buildAtelierDots();
     layoutAtelierSlides();
     requestAnimationFrame(tickAtelierCarousel);
   </script>
