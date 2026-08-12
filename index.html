@@ -1080,10 +1080,34 @@
       });
     }
 
-    atelierNext.addEventListener('click', () => goAtelierSlide('next'));
-    atelierPrev.addEventListener('click', () => goAtelierSlide('prev'));
+    const ATELIER_AUTOPLAY_DELAY = 5000;
+    let atelierAutoplayTimer = null;
+    const atelierVisual = document.querySelector('.atelier-visual');
+
+    function startAtelierAutoplay() {
+      atelierAutoplayTimer = setInterval(() => goAtelierSlide('next'), ATELIER_AUTOPLAY_DELAY);
+    }
+
+    function resetAtelierAutoplay() {
+      clearInterval(atelierAutoplayTimer);
+      startAtelierAutoplay();
+    }
+
+    atelierNext.addEventListener('click', () => {
+      goAtelierSlide('next');
+      resetAtelierAutoplay();
+    });
+
+    atelierPrev.addEventListener('click', () => {
+      goAtelierSlide('prev');
+      resetAtelierAutoplay();
+    });
+
+    atelierVisual.addEventListener('mouseenter', () => clearInterval(atelierAutoplayTimer));
+    atelierVisual.addEventListener('mouseleave', startAtelierAutoplay);
 
     renderAtelierSlides();
+    startAtelierAutoplay();
   </script>
 
 </body>
